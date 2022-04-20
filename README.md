@@ -11,7 +11,13 @@ Instituição: Universidade do Vale dos Sinos - São Leopoldo
 ## Estrutura de Pastas
 - `src`: Solução da aplicação.
 - `tests`: Implementação de testes de unidade.
-- `docs`": Documentos relacionados ao trabalho.
+- `docs`: Documentos relacionados ao trabalho.
 
 ## Como Executar
 
+
+## Como Simular Ambiente
+
+## Referências usadas
+- [UDP - Client And Server Example Programs In Python](https://pythontic.com/modules/socket/udp-client-server-example)
+- [Socket Básico](https://wiki.python.org.br/SocketBasico)
