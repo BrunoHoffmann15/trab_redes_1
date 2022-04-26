@@ -1,4 +1,6 @@
 import socket
+import threading
+import time
 
 class Client:
 
@@ -8,51 +10,60 @@ class Client:
 
     def execute(self):
         while True:
-            print("MENU: \n 1. Enviar comando para Rede. \n 2. Adicionar novo peer na lista. \n 3. Excluir peer existente.");
-            command = 1  #TODO: Get value from typing
-
-            if (command == 1)
-                self.send_command()
-            if (command == 2)
-                self.add_new_peer()
-            if (command == 3)
-                self.remove_peer()
-            else
-                print("Comando não encontrado!")
+            try:
+                print("[Client] MENU: \n 1. Enviar comando para Rede. \n 2. Adicionar novo peer na lista. \n 3. Excluir peer existente. \n 4. Finalizar");
+                command = int(input("[Client] Digite o ação que você deseja.\n"))
+                
+                if (command == 1):
+                    self.send_command()
+                elif (command == 2):
+                    self.add_new_peer()
+                elif (command == 3):
+                    self.remove_peer()
+                else:
+                    print("[Client] Finalizando aplicação.")
+                    return
+            except Exception as e:
+                print("[Client]", e)
+                print("[Client] Ocorreu um erro durante o processo.")
 
 
     def add_new_peer(self):
-        print("Digite o endereço do servidor")
-        address = "" #TODO: Get value from typing
-        print("Digite a porta para envio")
-        port = "" #TODO: Get value from typing
-
+        address = input("[Client] Digite o endereço do servidor\n")
+        port = int(input("[Client] Digite a porta para envio\n"))
+        
         self.peer.append([address, port])
     
     def remove_peer(self):
-        if (len(self.peer) <= 0)
-            print("Nenhum peer para remover.")
+        if (len(self.peer) <= 0):
+            print("[Client] Nenhum peer para remover.")
             return
 
-        print("Digite qual dos peers você deseja remover?")
+        print("[Client] Peers:")
 
         i = 0
 
         for p in self.peer:
-            print("{0} - {1}".format(i, p[0]))
+            print("[Client] {0} - {1}".format(i, p[0]))
+            i += 1
 
-        command = 0 #TODO: Get value from typing
+        command = int(input("[Client] Digite qual dos peers você deseja remover?\n"))
 
-        if (command <= 0 or command >= len(self.peer))
-            print("Opção não disponível.")
+        if (command < 0 or command >= len(self.peer)):
+            print("[Client] Opção não disponível.")
+            return
 
         self.peer.pop(command)
 
     def send_command(self):
-        print("Digite o comando que você deseja enviar.")
-        command = "ls"
+        if (len(self.peer) <= 0):
+            print("[Client] Adicione um peer antes.")
+            return
 
-        self.send_request(peer[0], peer[1], command)
+        command = input("[Client] Digite o comando que você deseja enviar.\n")
+
+        for p in self.peer:
+            self.send_request(p[0], p[1], command)
 
 
     def send_request(self, peerAddress, peerPort, message):
@@ -62,21 +73,22 @@ class Client:
 
         while True:
             try:
-                print("Enviando para o peer de endereço %s ...", peerAddress)
+                print("[Client] Enviando para o peer de endereço %s ...", peerAddress)
 
-                timesSended += 0
-                socket = socket.socket(family=socket.AF_INET, type=socket.SOCK_DGRAM)
-                socket.sendto(bytesToSend, fullAddress)
+                udpSocket = socket.socket(family=socket.AF_INET, type=socket.SOCK_DGRAM)
+                udpSocket.sendto(bytesToSend, fullAddress)
 
-                socket.settimeout(2)
-                resultInBytes = socket.recvfrom(bufferSize)
-                resultInString = msgFromServer[0].decode()
+                udpSocket.settimeout(2)
+                resultInBytes = udpSocket.recvfrom(1024)
+                resultInString = resultInBytes[0].decode()
 
-                print("O servidor {0} respondeu: \n{1}".format(peerAddress, resultInString))
+                print("[Client] O peer {0} respondeu: \n{1}".format(peerAddress, resultInString))
                 break
-            except:
-                if (timesSended < 5)
-                    print("Retentativa de envio para peer: %s", peer)
-                else
-                    print("Não foi possível enviar comando para peer: %s", peer)
+            except Exception as e:
+                print("[Client]", e)
+
+                if (timesSended < 5):
+                    print("[Client] Retentativa de envio para peer: %s", peer)
+                else:
+                    print("[Client] Não foi possível enviar comando para peer: %s", peer)
                     break

@@ -10,26 +10,28 @@ class Server:
     self.ipAddress = socket.gethostbyname(hostname)
     self.port = 20001
     self.bufferSize = 1024
+    print("[Server] Ip address: %s", self.ipAddress)
 
-  def run(self):
-    print('Inicializando servidor...')
+  def execute(self):
+    print('[Server] Inicializando servidor...')
 
     udpSocket = socket.socket(family=socket.AF_INET, type=socket.SOCK_DGRAM)
     udpSocket.bind((self.ipAddress, self.port))
 
     while True:
-      print('Esperando mensagem...')
+      print('[Server] Esperando mensagem...')
       message = udpSocket.recvfrom(self.bufferSize)
 
-      print('Mensagem recebida.')
+      print('[Server] Mensagem recebida.')
       command = message[0].decode()
       client_address = message[1]
 
-      print(command)
+      print("[Server] ", command)
 
       result = str.encode(self.execute_command(command))
       udpSocket.sendto(result, client_address)
-      print('Enviando mensagem de volta para cliente.')
+
+      print('[Server] Enviando mensagem de volta para cliente.')
 
   def execute_command(self, command):
     stream = os.popen(command)
