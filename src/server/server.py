@@ -8,9 +8,9 @@ class Server:
   def configure(self):
     hostname = socket.gethostname()
     self.ipAddress = socket.gethostbyname(hostname)
-    self.port = 20001
+    self.port = 6000
     self.bufferSize = 1024
-    print("[Server] Ip address: %s", self.ipAddress)
+    print("[Server] Ip address:", self.ipAddress)
 
   def execute(self):
     print('[Server] Inicializando servidor...')

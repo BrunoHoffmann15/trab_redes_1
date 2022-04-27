@@ -75,6 +75,8 @@ class Client:
             try:
                 print("[Client] Enviando para o peer de endereço %s ...", peerAddress)
 
+                timesSended += 1
+
                 udpSocket = socket.socket(family=socket.AF_INET, type=socket.SOCK_DGRAM)
                 udpSocket.sendto(bytesToSend, fullAddress)
 
@@ -88,7 +90,9 @@ class Client:
                 print("[Client]", e)
 
                 if (timesSended < 5):
-                    print("[Client] Retentativa de envio para peer: %s", peer)
+                    print("[Client] Retentativa de envio para peer: %s", peerAddress)
                 else:
-                    print("[Client] Não foi possível enviar comando para peer: %s", peer)
+                    print("[Client] Não foi possível enviar comando para peer: %s", peerAddress)
                     break
+
+                
