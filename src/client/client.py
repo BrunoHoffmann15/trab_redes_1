@@ -6,7 +6,7 @@ class Client:
 
     def __init__(self): 
         self.bufferSize = 1024
-        self.peer = []
+        self.peers = []
 
     def execute(self):
         while True:
@@ -32,10 +32,10 @@ class Client:
         address = input("[Client] Digite o endereço do servidor\n")
         port = int(input("[Client] Digite a porta para envio\n"))
         
-        self.peer.append([address, port])
+        self.peers.append([address, port])
     
     def remove_peer(self):
-        if (len(self.peer) <= 0):
+        if (len(self.peers) <= 0):
             print("[Client] Nenhum peer para remover.")
             return
 
@@ -43,26 +43,26 @@ class Client:
 
         i = 0
 
-        for p in self.peer:
+        for p in self.peers:
             print("[Client] {0} - {1}".format(i, p[0]))
             i += 1
 
         command = int(input("[Client] Digite qual dos peers você deseja remover?\n"))
 
-        if (command < 0 or command >= len(self.peer)):
+        if (command < 0 or command >= len(self.peers)):
             print("[Client] Opção não disponível.")
             return
 
-        self.peer.pop(command)
+        self.peers.pop(command)
 
     def send_command(self):
-        if (len(self.peer) <= 0):
+        if (len(self.peers) <= 0):
             print("[Client] Adicione um peer antes.")
             return
 
         command = input("[Client] Digite o comando que você deseja enviar.\n")
 
-        for p in self.peer:
+        for p in self.peers:
             self.send_request(p[0], p[1], command)
 
 
