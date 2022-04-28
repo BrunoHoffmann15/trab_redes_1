@@ -1,5 +1,4 @@
 import threading
-import time
 
 from server.server import Server
 from client.client import Client
@@ -11,9 +10,9 @@ class ThreadControl(threading.Thread):
         self.type = type
 
     def run(self):
-        if (self.type == 1):
+        if (self.type == 1): # caso seja servidor
             server = Server()
             server.execute()
-        else:
+        else: # caso seja client
             client = Client()
             client.execute()

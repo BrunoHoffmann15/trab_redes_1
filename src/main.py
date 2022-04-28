@@ -1,5 +1,4 @@
 from thread_control import ThreadControl
-import sys
 
 import time
 
