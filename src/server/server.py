@@ -8,10 +8,11 @@ class Server:
   def configure(self):
     hostname = socket.gethostname()
     self.ipAddress = socket.gethostbyname(hostname)
-    # self.ipAddress = self.execute_command('hostname -I') # descomente em caso de executar em VM
+    #self.ipAddress = self.execute_command('hostname -I') # descomente em caso de executar em VM Linux
     self.port = 6000
     self.bufferSize = 1024
     print("[Server] Ip address:", self.ipAddress)
+    print("[Server] Port:", self.port)
 
   def execute(self):
     print('[Server] Inicializando servidor...')
@@ -25,12 +26,12 @@ class Server:
 
       print('[Server] Mensagem recebida.')
       command = message[0].decode()
-      client_address = message[1]
+      clientAddress = message[1]
 
-      print("[Server] ", command)
-
+      print("[Server] Comando: ", command)
+      
       result = str.encode(self.execute_command(command))
-      udpSocket.sendto(result, client_address)
+      udpSocket.sendto(result, clientAddress)
 
       print('[Server] Enviando mensagem de volta para cliente.')
 

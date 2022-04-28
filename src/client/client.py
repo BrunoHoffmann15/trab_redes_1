@@ -24,9 +24,7 @@ class Client:
                     print("[Client] Finalizando aplicação.")
                     return
             except Exception as e:
-                print("[Client]", e)
-                print("[Client] Ocorreu um erro durante o processo.")
-
+                print("[Client] Erro: ", e)
 
     def add_new_peer(self):
         address = input("[Client] Digite o endereço do servidor\n")
@@ -73,7 +71,7 @@ class Client:
 
         while True:
             try:
-                print("[Client] Enviando para o peer de endereço %s ...", peerAddress)
+                print("[Client] Enviando para o peer de endereço %s ..." % (peerAddress))
 
                 timesSended += 1
 
@@ -87,7 +85,7 @@ class Client:
                 print("[Client] O peer {0} respondeu: \n{1}".format(peerAddress, resultInString))
                 break
             except Exception as e:
-                print("[Client]", e)
+                print("[Client] Erro: ", e)
 
                 if (timesSended < 5):
                     print("[Client] Retentativa de envio para peer: %s", peerAddress)

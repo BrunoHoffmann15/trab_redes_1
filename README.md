@@ -23,7 +23,7 @@ Instituição: Universidade do Vale dos Sinos - São Leopoldo
 
 [x] Apresentação das informações para cada peer envolvido
 
-[ ] Testar o software em no mínimo dois ambientes diferentes, i.e., Máquinas Virtual, Bare
+[x] Testar o software em no mínimo dois ambientes diferentes, i.e., Máquinas Virtual, Bare
 metal, Containers, plataforma em nuvem, etc.
 
 [x] Adição de um novo nodo (peer) na rede.
@@ -43,3 +43,6 @@ metal, Containers, plataforma em nuvem, etc.
 ## Referências usadas
 - [UDP - Client And Server Example Programs In Python](https://pythontic.com/modules/socket/udp-client-server-example)
 - [Socket Básico](https://wiki.python.org.br/SocketBasico)
+- [Thread](https://www.tutorialspoint.com/python/python_multithreading.htm)
+- [Dockerfile](https://docs.docker.com/language/python/build-images/)
+- [How to Execute Shell Commands with Python](https://janakiev.com/blog/python-shell-commands/)
