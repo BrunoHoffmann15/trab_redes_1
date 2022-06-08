@@ -9,7 +9,7 @@ class Server:
     hostname = socket.gethostname()
     self.ipAddress = socket.gethostbyname(hostname)
     #self.ipAddress = self.execute_command('hostname -I').strip() # descomente em caso de executar em VM Linux
-    self.port = 22223
+    self.port = 1024
     self.bufferSize = 1024
     print("[Server] Ip address:", self.ipAddress)
     print("[Server] Port:", self.port)
