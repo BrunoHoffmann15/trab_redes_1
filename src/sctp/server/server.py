@@ -1,4 +1,5 @@
 import socket
+import sctp
 import os
 
 class Server:
@@ -9,7 +10,7 @@ class Server:
     hostname = socket.gethostname()
     self.ipAddress = socket.gethostbyname(hostname)
     #self.ipAddress = self.execute_command('hostname -I').strip() # descomente em caso de executar em VM Linux
-    self.port = 1024
+    self.port = 22223
     self.bufferSize = 1024
     print("[Server] Ip address:", self.ipAddress)
     print("[Server] Port:", self.port)
@@ -17,18 +18,19 @@ class Server:
   def execute(self):
     print('[Server] Inicializando servidor...')
 
-    tcpSocket = socket.socket(family=socket.AF_INET, type=socket.SOCK_STREAM)
+    sctpSocket = sctp.sctpsocket_tcp(socket.AF_INET)
     
-    tcpSocket.bind((self.ipAddress, self.port))
-    tcpSocket.listen(5)
+    sctpSocket.bind((self.ipAddress, self.port))
+    sctpSocket.listen(5)
 
     while True:
       print('[Server] Esperando conexão...')
-      connection, clientAddress = tcpSocket.accept()
+      connection, clientAddress = sctpSocket.accept()
       print('[Server] Conexão feita com ', clientAddress)
 
       print('[Server] Esperando mensagem...')
-      message = connection.recv(self.bufferSize)
+      data = connection.sctp_recv(self.bufferSize)
+      message = data[2]
 
       print('[Server] Mensagem recebida.')
       command = message.decode()
@@ -36,12 +38,12 @@ class Server:
       print("[Server] Comando: ", command)
       
       result = str.encode(self.execute_command(command))
-      connection.send(result)
+      connection.sctp_send(result)
 
       print('[Server] Enviando mensagem de volta para cliente.')
       connection.close()
 
-    tcpSocket.close()
+    sctpSocket.close()
 
   def execute_command(self, command):
     stream = os.popen(command)
