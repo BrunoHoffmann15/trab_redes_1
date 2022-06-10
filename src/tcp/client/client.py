@@ -79,7 +79,7 @@ class Client:
 
                 tcpSocket.send(bytesToSend)
 
-                print("[Client] Enviando para o peer de endereço %s ..." % (peerAddress))
+                print("[Client] Comando enviado para o peer de endereço %s ..." % (peerAddress))
 
                 resultInBytes = tcpSocket.recv(self.bufferSize)
                 resultInString = resultInBytes.decode()

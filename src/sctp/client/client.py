@@ -80,7 +80,7 @@ class Client:
 
                 sctpSocket.send(bytesToSend)
 
-                print("[Client] Enviando para o peer de endereço %s ..." % (peerAddress))
+                print("[Client] Comando enviado para o peer de endereço %s ..." % (peerAddress))
 
                 resultInBytes = sctpSocket.sctp_recv(self.bufferSize)
                 resultInString = resultInBytes[2].decode()
